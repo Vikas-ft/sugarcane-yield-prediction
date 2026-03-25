@@ -19,7 +19,7 @@ district = st.selectbox(
 
 # Fetch NDVI of selected district
 selected_row = data[data['District'] == district].iloc[0]
-avg_ndvi = selected_row['Avg_NDVI']
+avg_ndvi = selected_row['NDVI']
 
 # Predict yield
 if st.button("Predict Yield"):
