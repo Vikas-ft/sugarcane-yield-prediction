@@ -6,7 +6,7 @@ import pickle
 model = pickle.load(open('yield_model.pkl', 'rb'))
 
 # Load district NDVI dataset
-data = pd.read_csv('TamilNadu_District_NDVI_Yield.csv')
+data = pd.read_csv('TamilNadu_District_Avg_NDVI - TamilNadu_District_Avg_NDVI.csv')
 
 st.title("Sugarcane Yield Prediction using Satellite Data")
 st.write("District-wise sugarcane yield prediction for Tamil Nadu")
