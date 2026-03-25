@@ -23,7 +23,7 @@ avg_ndvi = selected_row['NDVI']
 
 # Predict yield
 if st.button("Predict Yield"):
-    input_data = pd.DataFrame([[avg_ndvi]], columns=['Avg_NDVI'])
+    input_data = pd.DataFrame([[avg_ndvi]], columns=['NDVI'])
     prediction = model.predict(input_data)
 
     st.success(
