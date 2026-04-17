@@ -5,50 +5,66 @@ import pickle
 # ------------------------------
 # PAGE CONFIG
 # ------------------------------
-st.set_page_config(
-    page_title="AI Yield Intelligence",
-    layout="wide"
-)
+st.set_page_config(page_title="AI Yield Intelligence", layout="wide")
 
 # ------------------------------
-# PREMIUM CSS (GLASS UI)
+# ULTRA PREMIUM GLASS CSS
 # ------------------------------
 st.markdown("""
 <style>
 
-/* Background */
+/* MAIN BACKGROUND */
 [data-testid="stAppViewContainer"] {
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     color: white;
 }
 
-/* Glass Card */
+/* REMOVE WHITE BLOCK */
+.block-container {
+    padding-top: 2rem;
+    background: transparent;
+}
+
+/* GLASS CARD */
 .glass {
     background: rgba(255, 255, 255, 0.08);
     border-radius: 20px;
-    padding: 25px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    animation: fadeIn 1.5s ease-in-out;
+    padding: 30px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    transition: 0.3s;
 }
 
-/* Title */
+/* HOVER EFFECT */
+.glass:hover {
+    transform: scale(1.02);
+}
+
+/* TITLE */
 .title {
-    font-size: 40px;
-    font-weight: bold;
     text-align: center;
-    color: #ffffff;
-    margin-bottom: 10px;
+    font-size: 42px;
+    font-weight: bold;
+    color: white;
 }
 
-/* Subtitle */
+/* SUBTITLE */
 .subtitle {
     text-align: center;
-    color: #d1d1d1;
+    color: #cccccc;
     margin-bottom: 30px;
 }
 
-/* Button */
+/* DROPDOWN STYLE */
+div[data-baseweb="select"] > div {
+    background: rgba(255,255,255,0.1) !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+}
+
+/* BUTTON */
 .stButton>button {
     background: linear-gradient(90deg, #00c6ff, #0072ff);
     color: white;
@@ -56,24 +72,35 @@ st.markdown("""
     height: 3.5em;
     width: 100%;
     font-size: 18px;
+    border: none;
     transition: 0.3s;
 }
 
 .stButton>button:hover {
     transform: scale(1.05);
+    box-shadow: 0 0 15px #00c6ff;
 }
 
-/* Result box */
+/* RESULT BOX */
 .result {
-    font-size: 24px;
-    text-align: center;
+    background: rgba(255,255,255,0.08);
+    border-radius: 15px;
     padding: 20px;
+    text-align: center;
+    font-size: 22px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
-/* Animation */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1; transform: translateY(0);}
+/* INFO BOX FIX */
+.stAlert {
+    background: rgba(255,255,255,0.1) !important;
+    border-radius: 10px;
+}
+
+/* HIDE FOOTER */
+footer {
+    visibility: hidden;
 }
 
 </style>
@@ -92,34 +119,31 @@ st.markdown('<div class="title">🌾 AI Yield Intelligence Platform</div>', unsa
 st.markdown('<div class="subtitle">Satellite-driven crop analytics for Tamil Nadu</div>', unsafe_allow_html=True)
 
 # ------------------------------
-# LAYOUT (COLUMNS)
+# LAYOUT
 # ------------------------------
 col1, col2 = st.columns([1,1])
 
 # ------------------------------
-# LEFT PANEL (INPUT)
+# LEFT PANEL
 # ------------------------------
 with col1:
     st.markdown('<div class="glass">', unsafe_allow_html=True)
 
     st.subheader("📍 Select District")
 
-    district = st.selectbox(
-        "",
-        sorted(data['District'].unique())
-    )
+    district = st.selectbox("", sorted(data['District'].unique()))
 
     selected_row = data[data['District'] == district].iloc[0]
     avg_ndvi = selected_row['NDVI']
 
-    st.write(f"🌿 NDVI Value: **{avg_ndvi:.2f}**")
+    st.markdown(f"<p style='color:#ccc;'>🌿 NDVI Value: <b>{avg_ndvi:.2f}</b></p>", unsafe_allow_html=True)
 
     predict = st.button("🚀 Generate Prediction")
 
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ------------------------------
-# RIGHT PANEL (OUTPUT)
+# RIGHT PANEL
 # ------------------------------
 with col2:
     st.markdown('<div class="glass">', unsafe_allow_html=True)
@@ -132,13 +156,12 @@ with col2:
 
         st.markdown(f"""
         <div class="result">
-            🌍 District: <b>{district}</b><br><br>
+            🌍 <b>{district}</b><br><br>
             📈 NDVI: <b>{avg_ndvi:.2f}</b><br><br>
             🌾 Yield Prediction:<br>
             <b>{prediction[0]:.2f} tonnes/hectare</b>
         </div>
         """, unsafe_allow_html=True)
-
     else:
         st.info("Click 'Generate Prediction' to see results")
 
